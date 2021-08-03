@@ -8,11 +8,12 @@ export interface ProductItemProps {
   onDelete?: any;
   zIndex?: TProductZIndex;
   onDragStart?: any;
-  isEditing: boolean;
+  isActive: boolean;
 }
 
 const CodyGenerationProductItem: React.FC<ProductItemProps> = (props) => {
-  const { imageSrc, zIndex, onDragStart, onDelete, isEditing } = props;
+  const { imageSrc, zIndex, onDragStart, onDelete, isActive } = props;
+
   return (
     <Rnd
       default={{
@@ -31,36 +32,35 @@ const CodyGenerationProductItem: React.FC<ProductItemProps> = (props) => {
         onDragStart(event);
       }}
       allowAnyClick
+      dragHandleClassName="dragme"
+      resizeHandleComponent={{
+        right: null,
+      }}
     >
-      <Wrapper>
-        <ProductImage
-          isEditing={isEditing}
-          src={imageSrc}
-          draggable={false}
-          alt="상품이미지"
-          onClick={(e) => {
-            onDelete(e);
-          }}
-        ></ProductImage>
-      </Wrapper>
-      <ResizeButton></ResizeButton>
+      <ProductImage
+        showBorders={isActive}
+        src={imageSrc}
+        draggable={false}
+        alt="https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"
+        className="dragme"
+      ></ProductImage>
+      <ResizeButton className="resizeme" show={isActive} />
       <DeleteButton
-        id="shit"
+        onClick={onDelete}
+        show={isActive}
         style={{ zIndex: zIndex + 1 }}
-      ></DeleteButton>
+      />
     </Rnd>
   );
 };
 
-const Wrapper = styled.div``;
-
-const ProductImage = styled.img<{ isEditing: boolean }>`
+const ProductImage = styled.img<{ showBorders: boolean }>`
   width: 100%;
   height: 100%;
-  ${(props) => (props.isEditing ? "border: 1px solid #ddd" : "border:none")};
+  ${(props) => (props.showBorders ? "border: 1px solid #ddd" : "border:none")};
 `;
 
-const DeleteButton = styled.div`
+const DeleteButton = styled.div<{ show: boolean }>`
   position: absolute;
   right: -7.5px;
   top: -7.5px;
@@ -68,8 +68,9 @@ const DeleteButton = styled.div`
   height: 15px;
   background-size: contain;
   background-image: url(${resolveUrl("/image/close_btn.png")});
+  opacity: ${(props) => (props.show ? 1 : 0)};
 `;
-const ResizeButton = styled.div`
+const ResizeButton = styled.div<{ show: boolean }>`
   position: absolute;
   right: -7.5px;
   bottom: -7.5px;
@@ -78,6 +79,7 @@ const ResizeButton = styled.div`
 
   background-image: url(${resolveUrl("/image/resize_btn.png")});
   background-size: contain;
+  opacity: ${(props) => (props.show ? 1 : 0)};
 `;
 
 export default CodyGenerationProductItem;

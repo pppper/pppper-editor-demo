@@ -24,14 +24,14 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
 
 const Wrapper = styled.div`
   flex-shrink: 0;
-  width: 30vw;
+  width: 38%;
   padding: 8px;
 `;
 
 const ProductImage = styled.img<{ selected: boolean }>`
   border: 4px solid;
   ${(props) => (props.selected ? "border-color: purple" : "border-color: transparent")};
-  transition: border-color 0.4s ease-in-out;
+  transition: border-color 0.3s ease-in;
   object-fit: cover;
   width: 100%;
 `;
