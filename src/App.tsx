@@ -11,22 +11,20 @@ export type TProductZIndex = number;
 
 function App() {
   useEffect(() => {
-    axios
-      .post("https://api.pppper.com/styles/test_new")
-      .then((response) => {
-        let rawProducts = response.data.slice(0, 5);
+    axios.post("https://api.pppper.com/styles/test_new").then((response) => {
+      let rawProducts = response.data.slice(0, 5);
 
-        let productsMap = new Map();
-        let productsZIndexMap = new Map();
+      let productsMap = new Map();
+      let productsZIndexMap = new Map();
 
-        for (let rawProduct of rawProducts) {
-          productsMap.set(rawProduct.id, rawProduct);
-          productsZIndexMap.set(rawProduct.id, 0);
-        }
+      for (let rawProduct of rawProducts) {
+        productsMap.set(rawProduct.id, rawProduct);
+        productsZIndexMap.set(rawProduct.id, 0);
+      }
 
-        setProductsMap(productsMap);
-        setProductsZIndexMap(productsZIndexMap);
-      });
+      setProductsMap(productsMap);
+      setProductsZIndexMap(productsZIndexMap);
+    });
   }, []);
 
   const [productsMap, setProductsMap] = useState<Map<TProductId, IProduct>>(
@@ -45,7 +43,7 @@ function App() {
     nextProductsZIndexMap.set(productId, zIndex);
     setProductsZIndexMap(nextProductsZIndexMap);
   };
-  
+
   const setProductSelectedStatus = (productId: number, selected: boolean) => {
     const foundProduct = productsMap.get(productId);
     console.log({ productId, selected });
@@ -105,10 +103,13 @@ function App() {
         {selectedProductIds.map((productId) => {
           const zIndex = getProductZIndex(productId);
           const maxZIndex = getMaxZIndex();
+          const imgUrl =
+            productsMap.get(productId)?.style_image.url ||
+            productsMap.get(productId)?.image.url;
           return (
             <CodyGenerationProductItem
               key={productId}
-              imageSrc={resolveUrl(productsMap.get(productId)?.style_image.url)}
+              imageSrc={resolveUrl(imgUrl)}
               zIndex={zIndex}
               isActive={!isNothingBeingEdited && maxZIndex === zIndex}
               onDelete={handleCodyGenerationProductItemDelete(productId)}
