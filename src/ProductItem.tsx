@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "hoist-non-react-statics/node_modules/@types/react";
+import { MouseEventHandler } from "react";
 import styled from "styled-components";
 import { IProduct } from "./types/IProduct";
 import { resolveUrl } from "./utils/resolveUrl";
