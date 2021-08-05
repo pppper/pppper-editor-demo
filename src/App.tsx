@@ -12,7 +12,7 @@ export type TProductZIndex = number;
 function App() {
   useEffect(() => {
     axios
-      .post("http://api.pppper.com:4455/styles/test_new")
+      .post("https://api.pppper.com/styles/test_new")
       .then((response) => {
         let rawProducts = response.data.slice(0, 5);
 
