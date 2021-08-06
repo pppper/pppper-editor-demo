@@ -1,5 +1,4 @@
 import "./App.css";
-import { IProduct, TProductId } from "./types/IProduct";
 import { resolveUrl } from "./utils/resolveUrl";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -27,13 +26,13 @@ function App() {
     });
   }, []);
 
-  const [productsMap, setProductsMap] = useState<Map<TProductId, IProduct>>(
-    new Map()
-  );
+  const [productsMap, setProductsMap] = useState<
+    Map<FetchedDataTypes.TProductId, FetchedDataTypes.IProduct>
+  >(new Map());
   const [isNothingBeingEdited, setIsNothingBeingEdited] =
     useState<boolean>(true);
   const [productsZIndexMap, setProductsZIndexMap] = useState<
-    Map<TProductId, TProductZIndex>
+    Map<FetchedDataTypes.TProductId, TProductZIndex>
   >(new Map());
   const [selectedProductIds, setSelectedProducts] = useState<number[]>([]);
 
@@ -46,7 +45,6 @@ function App() {
 
   const setProductSelectedStatus = (productId: number, selected: boolean) => {
     const foundProduct = productsMap.get(productId);
-    console.log({ productId, selected });
     if (!foundProduct) {
       throw new Error("Product Not Found!");
     }

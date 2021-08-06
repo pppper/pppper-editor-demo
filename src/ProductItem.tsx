@@ -1,10 +1,9 @@
 import { MouseEventHandler } from "react";
 import styled from "styled-components";
-import { IProduct } from "./types/IProduct";
 import { resolveUrl } from "./utils/resolveUrl";
 
 interface ProductItemProps {
-  product: IProduct;
+  product: FetchedDataTypes.IProduct;
   selected?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
