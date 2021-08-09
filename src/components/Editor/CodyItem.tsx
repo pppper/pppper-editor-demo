@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Rnd } from "react-rnd";
 import { TProductZIndex } from "../../App";
 import { resolveUrl } from "../../utils/resolveUrl";
+import { useCodyEditor } from "../../hooks/useCodyEditor";
 
 export interface ProductItemProps {
   imageSrc: string;
@@ -46,6 +47,8 @@ const CodyItem: React.FC<ProductItemProps> = (props) => {
     onResize: handleResize,
     zIndex,
   } = props;
+
+  const { getItemPositionAndSize } = useCodyEditor();
 
   return (
     <Rnd

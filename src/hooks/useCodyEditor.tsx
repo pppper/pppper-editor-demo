@@ -49,7 +49,7 @@ export interface ICodyEditorContext {
   getProductZIndex;
   handleItemFocus;
   handleUnfocusAll;
-  isEditing;
+  isAnythingFocused;
   isProductOnTop;
   isProductSelected;
   products;
@@ -61,6 +61,7 @@ export interface ICodyEditorContext {
 
 export const CodyEditorContext = createContext({} as ICodyEditorContext);
 
+const generateContext = () => {}
 export const CodyEditorContextProvider = ({ children }) => {
   const [products, setProducts] = useState<IProduct[]>(initialProducts);
 
@@ -115,7 +116,8 @@ export const CodyEditorContextProvider = ({ children }) => {
   const [selectedProductIdSet, setSelectedProductIdSet] = useState<Set<number>>(
     new Set()
   );
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+  
+  const [isAnythingFocused, setIsAnythingFocused] = useState<boolean>(false);
 
   const selectProduct = (product: IProduct) => {
     const nextSelectedProductIdSet = new Set(selectedProductIdSet);
@@ -157,11 +159,11 @@ export const CodyEditorContextProvider = ({ children }) => {
       nextZIndex = zIndex;
     }
     setProductZIndex(product, nextZIndex);
-    setIsEditing(true);
+    setIsAnythingFocused(true);
   };
 
   const handleUnfocusAll = () => {
-    setIsEditing(false);
+    setIsAnythingFocused(false);
   };
 
   const selectedProducts = products.filter((product) =>
@@ -175,7 +177,7 @@ export const CodyEditorContextProvider = ({ children }) => {
     getProductZIndex,
     handleItemFocus,
     handleUnfocusAll,
-    isEditing,
+    isAnythingFocused,
     isProductOnTop,
     isProductSelected,
     products,
@@ -184,6 +186,7 @@ export const CodyEditorContextProvider = ({ children }) => {
     setProducts,
     updateItemPositionAndSize,
   };
+
   return (
     <CodyEditorContext.Provider value={context}>
       {children}
