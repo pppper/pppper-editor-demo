@@ -48,7 +48,7 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
     zIndex,
   } = props;
 
-  const {  focusItem } = useCodyEditor();
+  const { focusItem } = useCodyEditor();
   return (
     <Rnd
       default={{
