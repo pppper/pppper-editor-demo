@@ -10,8 +10,9 @@ export interface ICodyViewerProps {
 
 const CodyViewer: React.FC<ICodyViewerProps> = (props) => {
   const { cody } = props;
+
   return (
-    <Wrapper>
+    <Wrapper backgroundColor={cody.backgroundColor}>
       {cody.products.map((product: IProduct) => {
         const itemPositionAndSize = cody.itemPositionAndSizeMap.get(product.id);
         const zIndex = cody.productsZIndexMap.get(product.id);
@@ -28,12 +29,12 @@ const CodyViewer: React.FC<ICodyViewerProps> = (props) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ backgroundColor: string }>`
   width: ${CODY_WIDTH}px;
   height: ${CODY_HEIGHT}px;
 
   position: relative;
-
+  background-color: ${(props) => props.backgroundColor};
   border: 1px solid black;
 `;
 

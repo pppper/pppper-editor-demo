@@ -27,6 +27,8 @@ export interface ICodyEditorContext {
   unfocusAllItems;
   unfocusItem;
   updateItemPositionAndSize;
+  backgroundColor;
+  setBackgroundColor;
 }
 
 export const CodyEditorContext = createContext({} as ICodyEditorContext);
@@ -49,6 +51,7 @@ export const CodyEditorContextProvider = ({ children }) => {
     return { initialProductsMap, initialProductsZIndexMap };
   })();
 
+  const [backgroundColor, setBackgroundColor] = useState<string>("#fff");
   const [focusedItemId, setFocusedItemId] = useState<TProductZIndex | null>(-1);
 
   const [productsMap, setProductsMap] =
@@ -132,8 +135,6 @@ export const CodyEditorContextProvider = ({ children }) => {
     }
     setProductZIndex(product, nextZIndex);
     setFocusedItemId(product.id);
-
-    console.table({ zIndex, maxZIndex, nextZIndex });
   };
 
   const unfocusItem = (product: IProduct) => {};
@@ -149,14 +150,16 @@ export const CodyEditorContextProvider = ({ children }) => {
       products: selectedProducts,
       productsZIndexMap: productsZIndexMap,
       itemPositionAndSizeMap: itemPositionAndSizeMap,
+      backgroundColor,
     };
   };
 
-  const serializeCody = () => {
+  const serializeCody = (): ISerializedCody => {
     return {
       products: selectedProducts,
       productsZIndex: Object.fromEntries(productsZIndexMap),
       itemPositionAndSize: Object.fromEntries(itemPositionAndSizeMap),
+      backgroundColor,
     };
   };
 
@@ -178,6 +181,8 @@ export const CodyEditorContextProvider = ({ children }) => {
     unfocusAllItems,
     unfocusItem,
     updateItemPositionAndSize,
+    backgroundColor,
+    setBackgroundColor,
   };
 
   return (
@@ -195,4 +200,12 @@ export interface ICody {
   products: IProduct[];
   productsZIndexMap: Map<TProductId, TProductZIndex>;
   itemPositionAndSizeMap: Map<TProductId, IEditorItemPositionAndSize>;
+  backgroundColor?: string;
+}
+
+export interface ISerializedCody {
+  products: IProduct[];
+  productsZIndex: Record<TProductId, TProductZIndex>;
+  itemPositionAndSize: Record<TProductId, IEditorItemPositionAndSize>;
+  backgroundColor?: string;
 }

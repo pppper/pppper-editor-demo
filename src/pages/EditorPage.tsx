@@ -34,22 +34,30 @@ const CodyGenerationPage: React.FC = () => {
     selectedProducts,
     setProducts,
     serializeCody,
+    setBackgroundColor,
   } = useCodyEditor();
 
   const cody: ICody = exportCody();
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  console.log(JSON.stringify(serializeCody(), null, 2));
+  const sampleColors = ["#FFAEBC", "#A0E7E5", "#B4F8C8", "#FBE7C6"];
+  const [color, setColor] = useState<string>(
+    sampleColors[Math.floor(Math.random() * sampleColors.length)]
+  );
+
+  useEffect(() => {
+    setBackgroundColor(color);
+  }, [color]);
+
+  // console.log(JSON.stringify(serializeCody(), null, 2));
 
   return (
     <Wrapper>
       <h1>코디를 만들어보아요</h1>
-      <button
-        onClick={() => {
-          setIsEditing(!isEditing);
+      <input
+        onChange={(e) => {
+          setColor(e.target.value);
         }}
-      >
-        EDITING : {isEditing ? "true" : "false"}
-      </button>
+      ></input>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <CodyEditingBox />
         {!cody || <CodyViewer cody={cody}></CodyViewer>}

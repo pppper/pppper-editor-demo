@@ -17,6 +17,7 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
     updateItemPositionAndSize,
     unfocusAllItems,
     focusedItemId,
+    backgroundColor,
   } = useCodyEditor();
 
   const handleCodyViewerClick = () => {
@@ -24,7 +25,7 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
   };
 
   return (
-    <Wrapper onClick={handleCodyViewerClick}>
+    <Wrapper onClick={handleCodyViewerClick} backgroundColor={backgroundColor}>
       {selectedProducts.map((product: IProduct) => (
         <CodyEditorItem
           key={product.id}
@@ -54,11 +55,12 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ backgroundColor: string }>`
   width: ${CODY_WIDTH}px;
   height: ${CODY_HEIGHT}px;
   border-radius: 8px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.17);
+  background-color: ${(props) => props.backgroundColor};
 `;
 
 export default CodyEditingBox;
