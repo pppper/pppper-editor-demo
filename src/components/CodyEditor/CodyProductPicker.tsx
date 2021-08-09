@@ -4,12 +4,8 @@ import { IProduct } from "../../types/IProduct";
 import CodyEditorProduct from "./CodyEditorProduct";
 
 const CodyProductPicker = () => {
-  const {
-    deselectProduct,
-    isProductSelected,
-    products,
-    selectProduct,
-  } = useCodyEditor();
+  const { deselectProduct, isProductSelected, products, selectProduct } =
+    useCodyEditor();
 
   return (
     <Wrapper>

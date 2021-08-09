@@ -12,10 +12,7 @@ const CodyEditorProduct: React.FC<ProductItemProps> = (props) => {
   const { product, onClick, selected } = props;
   return (
     <Wrapper onClick={onClick}>
-      <ProductImage
-        selected={selected}
-        src={product.image}
-      ></ProductImage>
+      <ProductImage selected={selected} src={product.image}></ProductImage>
       <div>{product.title.slice(0, 10)}...</div>
     </Wrapper>
   );
@@ -29,7 +26,8 @@ const Wrapper = styled.div`
 
 const ProductImage = styled.img<{ selected: boolean }>`
   border: 4px solid;
-  ${(props) => (props.selected ? "border-color: purple" : "border-color: transparent")};
+  ${(props) =>
+    props.selected ? "border-color: purple" : "border-color: transparent"};
   transition: border-color 0.3s ease-in;
   object-fit: cover;
   width: 100%;
