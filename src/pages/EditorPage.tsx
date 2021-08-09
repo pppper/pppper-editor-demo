@@ -1,14 +1,15 @@
 import { useState } from "react";
 import styled from "styled-components";
-import CodyItem, {
+import CodyEditorItem, {
   IEditorItemPositionAndSize,
   initialEditorItemSize,
-} from "../components/Editor/CodyItem";
-import CodyPicker from "../components/Editor/CodyPicker";
-import CodyProduct from "../components/Editor/CodyProduct";
-import CodyEditingBox from "../components/Editor/CodyEditingBox";
-import { useCodyEditor } from "../hooks/useCodyEditor";
+} from "../components/CodyEditor/CodyEditorItem";
+import CodyProductPicker from "../components/CodyEditor/CodyProductPicker";
+import CodyEditorProduct from "../components/CodyEditor/CodyEditorProduct";
+import CodyEditingBox from "../components/CodyEditor/CodyEditingBox";
+import { ICody, useCodyEditor } from "../hooks/useCodyEditor";
 import { IProduct } from "../types/IProduct";
+import CodyViewer from "../components/CodyViewer/CodyViewer";
 
 const CodyGenerationPage: React.FC = () => {
   const {
@@ -24,12 +25,14 @@ const CodyGenerationPage: React.FC = () => {
     selectProduct,
     updateItemPositionAndSize,
     getItemPositionAndSize,
+    exportCody,
   } = useCodyEditor();
 
+  const cody: ICody = exportCody();
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   return (
-    <>
+    <Wrapper>
       <h1>코디를 만들어보아요</h1>
       <button
         onClick={() => {
@@ -38,8 +41,11 @@ const CodyGenerationPage: React.FC = () => {
       >
         EDITING : {isEditing ? "true" : "false"}
       </button>
-      <CodyEditingBox />
-      <CodyPicker />
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <CodyEditingBox />
+        {!cody || <CodyViewer cody={cody}></CodyViewer>}
+      </div>
+      <CodyProductPicker />
       {selectedProducts.map((product) => {
         const itemPositionAndSize: IEditorItemPositionAndSize =
           getItemPositionAndSize(product);
@@ -55,8 +61,10 @@ const CodyGenerationPage: React.FC = () => {
           </div>
         );
       })}
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div``;
 
 export default CodyGenerationPage;

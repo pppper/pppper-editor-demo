@@ -6,7 +6,7 @@ import {
   IEditorItemPositionAndSize,
   initialEditorItemPosition,
   initialEditorItemSize,
-} from "../components/Editor/CodyItem";
+} from "../components/CodyEditor/CodyEditorItem";
 import { useContext } from "react";
 
 const initialProducts: IProduct[] = [
@@ -172,7 +172,7 @@ export const CodyEditorContextProvider = ({ children }) => {
 
   const exportCody = (): ICody => {
     return {
-      products: products,
+      products: selectedProducts,
       productsZIndexMap: productsZIndexMap,
       itemPositionAndSizeMap: itemPositionAndSizeMap,
     };

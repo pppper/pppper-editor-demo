@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CODY_HEIGHT, CODY_WIDTH } from "../../constants";
 import { useCodyEditor } from "../../hooks/useCodyEditor";
 import { IProduct } from "../../types/IProduct";
-import CodyItem, { initialEditorItemSize } from "./CodyItem";
+import CodyEditorItem, { initialEditorItemSize } from "./CodyEditorItem";
 
 interface ICodyViewerProps {
   isEditing?: boolean;
@@ -27,8 +27,9 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
   return (
     <Wrapper onClick={handleCodyViewerClick}>
       {selectedProducts.map((product: IProduct) => (
-        <CodyItem
+        <CodyEditorItem
           key={product.id}
+          productId={product.id}
           imageSrc={product.style_image.url || product.image.url}
           zIndex={getProductZIndex(product)}
           isActive={isAnythingFocused && isProductOnTop(product)}
@@ -46,11 +47,11 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
             updateItemPositionAndSize(product, {
               x: position.x,
               y: position.y,
-              width: initialEditorItemSize.width + delta.width,
-              height: initialEditorItemSize.width + delta.height,
+              width: refToElement.offsetWidth,
+              height: refToElement.offsetHeight,
             });
           }}
-        ></CodyItem>
+        ></CodyEditorItem>
       ))}
     </Wrapper>
   );

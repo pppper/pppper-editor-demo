@@ -11,11 +11,18 @@ export interface ICodyViewerProps {
 const CodyViewer: React.FC<ICodyViewerProps> = (props) => {
   const { cody } = props;
   return (
-    <div>
+    <Wrapper>
       {cody.products.map((product: IProduct) => {
-        return <CodyViewerItem>{product.title}</CodyViewerItem>;
+        const itemPositionAndSize = cody.itemPositionAndSizeMap.get(product.id);
+        return (
+          <CodyViewerItem
+            key={product.id}
+            product={product}
+            itemPositionAndSize={itemPositionAndSize}
+          />
+        );
       })}
-    </div>
+    </Wrapper>
   );
 };
 
@@ -24,6 +31,8 @@ const Wrapper = styled.div`
   height: ${CODY_HEIGHT}px;
 
   position: relative;
+
+  border: 1px solid black;
 `;
 
 export default CodyViewer;

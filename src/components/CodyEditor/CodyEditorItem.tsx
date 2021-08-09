@@ -3,6 +3,7 @@ import { Rnd } from "react-rnd";
 import { TProductZIndex } from "../../App";
 import { resolveUrl } from "../../utils/resolveUrl";
 import { useCodyEditor } from "../../hooks/useCodyEditor";
+import { TProductId } from "../../types/IProduct";
 
 export interface ProductItemProps {
   imageSrc: string;
@@ -12,6 +13,7 @@ export interface ProductItemProps {
   onFocus?: any;
   onResize?: any;
   zIndex?: TProductZIndex;
+  productId: TProductId;
 }
 
 export type IEditorItemPositionAndSize = IEditorItemPosition & IEditorItemSize;
@@ -39,6 +41,7 @@ export const initialEditorItemSize: IEditorItemSize = {
 
 const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
   const {
+    productId,
     imageSrc,
     isActive,
     onDelete: handleDeleteButtonClick,
@@ -49,6 +52,9 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
   } = props;
 
   const { getItemPositionAndSize } = useCodyEditor();
+  
+  const itemPositionAndSize: IEditorItemPositionAndSize =
+    getItemPositionAndSize(productId);
 
   return (
     <Rnd
@@ -63,13 +69,21 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
         zIndex: zIndex || 0,
       }}
       onDragStart={handleDragStart}
-      onDrag={handleDrag}
-      onResize={handleResize}
+      onDragStop={handleDrag}
+      onResizeStop={handleResize}
       allowAnyClick
       dragHandleClassName="dragme"
       resizeHandleComponent={{
         right: null,
       }}
+      // size={{
+      //   width: itemPositionAndSize.width,
+      //   height: itemPositionAndSize.height,
+      // }}
+      // position={{
+      //   x: itemPositionAndSize.x,
+      //   y: itemPositionAndSize.y,
+      // }}
     >
       <ProductImage
         showBorders={isActive}
@@ -88,11 +102,14 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
   );
 };
 
-const ProductImage = styled.img<{ showBorders: boolean }>`
+const ProductImage = styled.img<{
+  showBorders: boolean;
+  // itemPositionAndSize: IEditorItemPositionAndSize;
+}>`
   width: 100%;
   height: 100%;
-  border: 5px solid;
-  border-color: ${(props) => (props.showBorders ? "#ddd" : "transparent")};
+  /* border: -1px solid;
+  border-color: ${(props) => (props.showBorders ? "#ddd" : "transparent")}; */
 `;
 
 const DeleteButton = styled.div<{ show: boolean }>`

@@ -1,8 +1,10 @@
 import "./App.css";
 import { IProduct, TProductId } from "./types/IProduct";
 import axios from "axios";
-import CodyItem, { initialEditorItemSize } from "./components/Editor/CodyItem";
-import CodyProduct from "./components/Editor/CodyProduct";
+import CodyEditorItem, {
+  initialEditorItemSize,
+} from "./components/CodyEditor/CodyEditorItem";
+import CodyEditorProduct from "./components/CodyEditor/CodyEditorProduct";
 import styled from "styled-components";
 import {
   CodyEditorContextProvider,
@@ -22,12 +24,6 @@ function App() {
   );
 }
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  width: 400px;
-`;
+const Wrapper = styled.div``;
 
 export default App;
