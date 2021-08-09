@@ -1,2 +1,2 @@
-export const CODY_VIEWER_WIDTH = 350;
-export const CODY_VIEWER_HEIGHT = 400
+export const CODY_WIDTH = 350;
+export const CODY_HEIGHT = 400

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CODY_VIEWER_HEIGHT, CODY_VIEWER_WIDTH } from "../../constants";
+import { CODY_HEIGHT, CODY_WIDTH } from "../../constants";
 import { useCodyEditor } from "../../hooks/useCodyEditor";
 import { IProduct } from "../../types/IProduct";
 import CodyItem, { initialEditorItemSize } from "./CodyItem";
@@ -8,7 +8,7 @@ interface ICodyViewerProps {
   isEditing?: boolean;
 }
 
-const CodyDisplayer: React.FC<ICodyViewerProps> = (props) => {
+const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
   const {
     deselectProduct,
     getItemPositionAndSize,
@@ -57,10 +57,10 @@ const CodyDisplayer: React.FC<ICodyViewerProps> = (props) => {
 };
 
 const Wrapper = styled.div`
-  width: ${CODY_VIEWER_WIDTH}px;
-  height: ${CODY_VIEWER_HEIGHT}px;
+  width: ${CODY_WIDTH}px;
+  height: ${CODY_HEIGHT}px;
   border-radius: 8px;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.17);
 `;
 
-export default CodyDisplayer;
+export default CodyEditingBox;

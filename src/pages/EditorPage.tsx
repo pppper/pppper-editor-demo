@@ -6,11 +6,11 @@ import CodyItem, {
 } from "../components/Editor/CodyItem";
 import CodyPicker from "../components/Editor/CodyPicker";
 import CodyProduct from "../components/Editor/CodyProduct";
-import CodyDisplayer from "../components/Editor/CodyDisplayer";
+import CodyEditingBox from "../components/Editor/CodyEditingBox";
 import { useCodyEditor } from "../hooks/useCodyEditor";
 import { IProduct } from "../types/IProduct";
 
-const EditorPage: React.FC = () => {
+const CodyGenerationPage: React.FC = () => {
   const {
     deselectProduct,
     getProductZIndex,
@@ -38,7 +38,7 @@ const EditorPage: React.FC = () => {
       >
         EDITING : {isEditing ? "true" : "false"}
       </button>
-      <CodyDisplayer />
+      <CodyEditingBox />
       <CodyPicker />
       {selectedProducts.map((product) => {
         const itemPositionAndSize: IEditorItemPositionAndSize =
@@ -59,4 +59,4 @@ const EditorPage: React.FC = () => {
   );
 };
 
-export default EditorPage;
+export default CodyGenerationPage;

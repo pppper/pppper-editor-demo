@@ -37,7 +37,7 @@ export const initialEditorItemSize: IEditorItemSize = {
   height: 120,
 };
 
-const CodyItem: React.FC<ProductItemProps> = (props) => {
+const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
   const {
     imageSrc,
     isActive,
@@ -117,4 +117,4 @@ const ResizeButton = styled.div<{ show: boolean }>`
   opacity: ${(props) => (props.show ? 1 : 0)};
 `;
 
-export default CodyItem;
+export default CodyEditorItem;

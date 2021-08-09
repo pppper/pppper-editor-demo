@@ -8,7 +8,7 @@ import {
   CodyEditorContextProvider,
   useCodyEditor,
 } from "./hooks/useCodyEditor";
-import EditorPage from "./pages/EditorPage";
+import CodyGenerationPage from "./pages/EditorPage";
 
 export type TProductZIndex = number;
 
@@ -16,7 +16,7 @@ function App() {
   return (
     <Wrapper className="App">
       <CodyEditorContextProvider>
-        <EditorPage></EditorPage>
+        <CodyGenerationPage></CodyGenerationPage>
       </CodyEditorContextProvider>
     </Wrapper>
   );

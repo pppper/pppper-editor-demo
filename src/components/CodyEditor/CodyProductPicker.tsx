@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useCodyEditor } from "../../hooks/useCodyEditor";
 import { IProduct } from "../../types/IProduct";
-import CodyProduct from "./CodyProduct";
+import CodyEditorProduct from "./CodyEditorProduct";
 
 
-const CodyPicker = () => {
+const CodyProductPicker = () => {
   const {
     deselectProduct,
     getProductZIndex,
@@ -25,7 +25,7 @@ const CodyPicker = () => {
       {products.map((product: IProduct) => {
         const selected = isProductSelected(product);
         return (
-          <CodyProduct
+          <CodyEditorProduct
             key={product.id}
             product={product}
             onClick={() => {
@@ -51,4 +51,4 @@ const Wrapper = styled.div`
   overflow-x: scroll;
 `;
 
-export default CodyPicker;
+export default CodyProductPicker;
