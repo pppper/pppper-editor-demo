@@ -1,26 +1,57 @@
 import styled from "styled-components";
 import { Rnd } from "react-rnd";
-import { TProductZIndex } from "./App";
-import { resolveUrl } from "./utils/resolveUrl";
+import { TProductZIndex } from "../../App";
+import { resolveUrl } from "../../utils/resolveUrl";
 
 export interface ProductItemProps {
   imageSrc: string;
-  onDelete?: any;
-  zIndex?: TProductZIndex;
-  onDragStart?: any;
   isActive: boolean;
+  onDelete?: any;
+  onDrag?: any;
+  onFocus?: any;
+  onResize?: any;
+  zIndex?: TProductZIndex;
 }
 
-const CodyGenerationProductItem: React.FC<ProductItemProps> = (props) => {
-  const { imageSrc, zIndex, onDragStart, onDelete, isActive } = props;
+export type IEditorItemPositionAndSize = IEditorItemPosition & IEditorItemSize;
+
+export interface IEditorItemPosition {
+  x: number;
+  y: number;
+}
+
+export interface IEditorItemSize {
+  width: number;
+  height: number;
+}
+
+// initial position
+export const initialEditorItemPosition: IEditorItemPosition = {
+  x: 20,
+  y: 20,
+};
+
+export const initialEditorItemSize: IEditorItemSize = {
+  width: 100,
+  height: 120,
+};
+
+const CodyItem: React.FC<ProductItemProps> = (props) => {
+  const {
+    imageSrc,
+    isActive,
+    onDelete: handleDeleteButtonClick,
+    onDrag: handleDrag,
+    onFocus: handleDragStart,
+    onResize: handleResize,
+    zIndex,
+  } = props;
 
   return (
     <Rnd
       default={{
-        x: 20,
-        y: 20,
-        width: 100,
-        height: 120,
+        ...initialEditorItemPosition,
+        ...initialEditorItemSize,
       }}
       lockAspectRatio
       dragAxis="both"
@@ -28,9 +59,9 @@ const CodyGenerationProductItem: React.FC<ProductItemProps> = (props) => {
       style={{
         zIndex: zIndex || 0,
       }}
-      onDragStart={(event) => {
-        onDragStart(event);
-      }}
+      onDragStart={handleDragStart}
+      onDrag={handleDrag}
+      onResize={handleResize}
       allowAnyClick
       dragHandleClassName="dragme"
       resizeHandleComponent={{
@@ -46,7 +77,7 @@ const CodyGenerationProductItem: React.FC<ProductItemProps> = (props) => {
       ></ProductImage>
       <ResizeButton className="resizeme" show={isActive} />
       <DeleteButton
-        onClick={onDelete}
+        onClick={handleDeleteButtonClick}
         show={isActive}
         style={{ zIndex: zIndex + 1 }}
       />
@@ -57,7 +88,8 @@ const CodyGenerationProductItem: React.FC<ProductItemProps> = (props) => {
 const ProductImage = styled.img<{ showBorders: boolean }>`
   width: 100%;
   height: 100%;
-  ${(props) => (props.showBorders ? "border: 1px solid #ddd" : "border:none")};
+  border: 5px solid;
+  border-color: ${(props) => (props.showBorders ? "#ddd" : "transparent")};
 `;
 
 const DeleteButton = styled.div<{ show: boolean }>`
@@ -82,4 +114,4 @@ const ResizeButton = styled.div<{ show: boolean }>`
   opacity: ${(props) => (props.show ? 1 : 0)};
 `;
 
-export default CodyGenerationProductItem;
+export default CodyItem;

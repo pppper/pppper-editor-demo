@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 import styled from "styled-components";
-import { IProduct } from "./types/IProduct";
-import { resolveUrl } from "./utils/resolveUrl";
+import { IProduct } from "../../types/IProduct";
+import { resolveUrl } from "../../utils/resolveUrl";
 
 interface ProductItemProps {
   product: IProduct;
@@ -15,7 +15,7 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
     <Wrapper onClick={onClick}>
       <ProductImage
         selected={selected}
-        src={resolveUrl(product.image.url)}
+        src={product.image.url}
       ></ProductImage>
       <div>{product.title.slice(0, 10)}...</div>
     </Wrapper>
