@@ -1,16 +1,18 @@
 import styled from "styled-components";
+import { TProductZIndex } from "../../App";
 import { IProduct } from "../../types/IProduct";
 import { IEditorItemPositionAndSize } from "../CodyEditor/CodyEditorItem";
 
 interface ICodyViewerItemProps {
   product?: IProduct;
   itemPositionAndSize: IEditorItemPositionAndSize;
+  zIndex: TProductZIndex;
 }
 
 const CodyViewerItem: React.FC<ICodyViewerItemProps> = (props) => {
-  const { product, itemPositionAndSize } = props;
+  const { product, itemPositionAndSize, zIndex } = props;
   return (
-    <Wrapper itemPositionAndSize={itemPositionAndSize}>
+    <Wrapper itemPositionAndSize={itemPositionAndSize} zIndex={zIndex}>
       <CodyImage
         src={product.style_image.url || product.image.url}
         itemPositionAndSize={itemPositionAndSize}
@@ -19,10 +21,14 @@ const CodyViewerItem: React.FC<ICodyViewerItemProps> = (props) => {
   );
 };
 
-const Wrapper = styled.div<{ itemPositionAndSize: IEditorItemPositionAndSize }>`
+const Wrapper = styled.div<{
+  itemPositionAndSize: IEditorItemPositionAndSize;
+  zIndex: TProductZIndex;
+}>`
   position: absolute;
   width: ${(props) => props.itemPositionAndSize.width}px;
   height: ${(props) => props.itemPositionAndSize.height}px;
+  z-index: ${(props) => props.zIndex};
 
   left: ${(props) => props.itemPositionAndSize.x}px;
   top: ${(props) => props.itemPositionAndSize.y}px;

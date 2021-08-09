@@ -14,11 +14,13 @@ const CodyViewer: React.FC<ICodyViewerProps> = (props) => {
     <Wrapper>
       {cody.products.map((product: IProduct) => {
         const itemPositionAndSize = cody.itemPositionAndSizeMap.get(product.id);
+        const zIndex = cody.productsZIndexMap.get(product.id);
         return (
           <CodyViewerItem
             key={product.id}
             product={product}
             itemPositionAndSize={itemPositionAndSize}
+            zIndex={zIndex}
           />
         );
       })}
