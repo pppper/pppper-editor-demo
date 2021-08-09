@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { TProductZIndex } from "../App";
 import { IProduct, TProductId } from "../types/IProduct";
-import _, { create } from "lodash";
+import _ from "lodash";
 import {
   IEditorItemPositionAndSize,
   initialEditorItemPosition,
