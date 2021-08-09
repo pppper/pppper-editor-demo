@@ -10,22 +10,39 @@ import CodyEditingBox from "../components/CodyEditor/CodyEditingBox";
 import { ICody, useCodyEditor } from "../hooks/useCodyEditor";
 import { IProduct } from "../types/IProduct";
 import CodyViewer from "../components/CodyViewer/CodyViewer";
+import { useEffect } from "react";
+import axios from "axios";
+import { resolveUrl } from "../utils/resolveUrl";
 
 const CodyGenerationPage: React.FC = () => {
+  useEffect(() => {
+    axios.post("https://api.pppper.com/styles/test_new").then((response) => {
+      const data = response.data.map((product: IProduct) => {
+        return {
+          ...product,
+          image: { ...product.image, url: resolveUrl(product.image.url) },
+          style_image: { ...product.style_image, url: resolveUrl(product.style_image.url) },
+        };
+      });
+      setProducts(data as IProduct[]);
+    });
+  }, []);
+
   const {
     deselectProduct,
+    exportCody,
+    getItemPositionAndSize,
     getProductZIndex,
     handleItemFocus,
-    isAnythingFocused,
     handleUnfocusAll,
+    isAnythingFocused,
     isProductOnTop,
     isProductSelected,
     products,
     selectedProducts,
     selectProduct,
+    setProducts,
     updateItemPositionAndSize,
-    getItemPositionAndSize,
-    exportCody,
   } = useCodyEditor();
 
   const cody: ICody = exportCody();

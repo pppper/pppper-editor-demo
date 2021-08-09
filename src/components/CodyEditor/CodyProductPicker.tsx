@@ -47,7 +47,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  width: 100%;
+  width: 400px;
   overflow-x: scroll;
 `;
 

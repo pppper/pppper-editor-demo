@@ -11,10 +11,14 @@ import {
   useCodyEditor,
 } from "./hooks/useCodyEditor";
 import CodyGenerationPage from "./pages/EditorPage";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export type TProductZIndex = number;
 
 function App() {
+  
+
   return (
     <Wrapper className="App">
       <CodyEditorContextProvider>

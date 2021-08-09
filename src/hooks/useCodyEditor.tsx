@@ -9,7 +9,7 @@ import {
 } from "../components/CodyEditor/CodyEditorItem";
 import { useContext } from "react";
 
-const initialProducts: IProduct[] = [
+const initialProducts2: IProduct[] = [
   {
     id: 123123,
     title: "옷가지1",
@@ -62,9 +62,12 @@ export interface ICodyEditorContext {
 
 export const CodyEditorContext = createContext({} as ICodyEditorContext);
 
-export const CodyEditorContextProvider = ({ children }) => {
-  const [products, setProducts] = useState<IProduct[]>(initialProducts);
+export interface ICodyEditorContexProviderProps {
+  initialProducts: IProduct[];
+}
 
+export const CodyEditorContextProvider = ({ children }) => {
+  const [products, setProducts] = useState<IProduct[]>([]);
   let { initialProductsMap, initialProductsZIndexMap } = (() => {
     const initialProductsMap = new Map();
     const initialProductsZIndexMap = new Map();
