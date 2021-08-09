@@ -57,11 +57,11 @@ export interface ICodyEditorContext {
   selectProduct;
   setProducts;
   updateItemPositionAndSize;
+  exportCody;
 }
 
 export const CodyEditorContext = createContext({} as ICodyEditorContext);
 
-const generateContext = () => {}
 export const CodyEditorContextProvider = ({ children }) => {
   const [products, setProducts] = useState<IProduct[]>(initialProducts);
 
@@ -116,7 +116,7 @@ export const CodyEditorContextProvider = ({ children }) => {
   const [selectedProductIdSet, setSelectedProductIdSet] = useState<Set<number>>(
     new Set()
   );
-  
+
   const [isAnythingFocused, setIsAnythingFocused] = useState<boolean>(false);
 
   const selectProduct = (product: IProduct) => {
@@ -170,7 +170,15 @@ export const CodyEditorContextProvider = ({ children }) => {
     isProductSelected(product)
   );
 
-  const context = {
+  const exportCody = (): ICody => {
+    return {
+      products: products,
+      productsZIndexMap: productsZIndexMap,
+      itemPositionAndSizeMap: itemPositionAndSizeMap,
+    };
+  };
+
+  const context: ICodyEditorContext = {
     deselectProduct,
     getItemPositionAndSize,
     getMaxZIndex,
@@ -185,6 +193,7 @@ export const CodyEditorContextProvider = ({ children }) => {
     selectProduct,
     setProducts,
     updateItemPositionAndSize,
+    exportCody,
   };
 
   return (
@@ -197,3 +206,9 @@ export const CodyEditorContextProvider = ({ children }) => {
 export const useCodyEditor = () => {
   return useContext(CodyEditorContext);
 };
+
+export interface ICody {
+  products: IProduct[];
+  productsZIndexMap: Map<TProductId, TProductZIndex>;
+  itemPositionAndSizeMap: Map<TProductId, IEditorItemPositionAndSize>;
+}
