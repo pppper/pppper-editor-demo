@@ -1,11 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import CodyEditorItem, {
-  IEditorItemPositionAndSize,
-  initialEditorItemSize,
-} from "../components/CodyEditor/CodyEditorItem";
+import { IEditorItemPositionAndSize } from "../components/CodyEditor/CodyEditorItem";
 import CodyProductPicker from "../components/CodyEditor/CodyProductPicker";
-import CodyEditorProduct from "../components/CodyEditor/CodyEditorProduct";
 import CodyEditingBox from "../components/CodyEditor/CodyEditingBox";
 import { ICody, useCodyEditor } from "../hooks/useCodyEditor";
 import { IProduct } from "../types/IProduct";
@@ -16,37 +12,33 @@ import { resolveUrl } from "../utils/resolveUrl";
 
 const CodyGenerationPage: React.FC = () => {
   useEffect(() => {
-    axios.post("https://api.pppper.com/styles/test_new").then((response) => {
-      const data = response.data.map((product: IProduct) => {
-        return {
-          ...product,
-          image: { ...product.image, url: resolveUrl(product.image.url) },
-          style_image: { ...product.style_image, url: resolveUrl(product.style_image.url) },
-        };
+    axios
+      .get(
+        "https://api.pppper.com/items?page=1&pageSize=30&tag_id&category_id&brand_id&select_content"
+      )
+      .then((response) => {
+        const data = response.data.map((product: IProduct) => {
+          return {
+            ...product,
+            image: resolveUrl(product.image),
+            style_image: resolveUrl(product.style_image),
+          };
+        });
+        setProducts(data as IProduct[]);
       });
-      setProducts(data as IProduct[]);
-    });
   }, []);
 
   const {
-    deselectProduct,
     exportCody,
     getItemPositionAndSize,
-    getProductZIndex,
-    handleItemFocus,
-    handleUnfocusAll,
-    isAnythingFocused,
-    isProductOnTop,
-    isProductSelected,
-    products,
     selectedProducts,
-    selectProduct,
     setProducts,
-    updateItemPositionAndSize,
+    serializeCody,
   } = useCodyEditor();
 
   const cody: ICody = exportCody();
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  console.log(JSON.stringify(serializeCody(), null, 2));
 
   return (
     <Wrapper>

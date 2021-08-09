@@ -1,19 +1,17 @@
 import styled from "styled-components";
 import { Rnd } from "react-rnd";
 import { TProductZIndex } from "../../App";
-import { resolveUrl } from "../../utils/resolveUrl";
 import { useCodyEditor } from "../../hooks/useCodyEditor";
-import { TProductId } from "../../types/IProduct";
+import { IProduct } from "../../types/IProduct";
 
 export interface ProductItemProps {
-  imageSrc: string;
-  isActive: boolean;
+  isFocused: boolean;
   onDelete?: any;
-  onDrag?: any;
-  onFocus?: any;
+  onResizeStop?: any;
+  onDragStop?: any;
   onResize?: any;
   zIndex?: TProductZIndex;
-  productId: TProductId;
+  product: IProduct;
 }
 
 export type IEditorItemPositionAndSize = IEditorItemPosition & IEditorItemSize;
@@ -41,21 +39,16 @@ export const initialEditorItemSize: IEditorItemSize = {
 
 const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
   const {
-    productId,
-    imageSrc,
-    isActive,
+    product,
+    isFocused,
     onDelete: handleDeleteButtonClick,
-    onDrag: handleDrag,
-    onFocus: handleDragStart,
-    onResize: handleResize,
+    onDragStop: handleDragStop,
+    // onDragStart: handleDragStart,
+    onResizeStop: handleResizeStop,
     zIndex,
   } = props;
 
-  const { getItemPositionAndSize } = useCodyEditor();
-  
-  const itemPositionAndSize: IEditorItemPositionAndSize =
-    getItemPositionAndSize(productId);
-
+  const {  focusItem } = useCodyEditor();
   return (
     <Rnd
       default={{
@@ -68,34 +61,28 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
       style={{
         zIndex: zIndex || 0,
       }}
-      onDragStart={handleDragStart}
-      onDragStop={handleDrag}
-      onResizeStop={handleResize}
+      onDragStop={handleDragStop}
+      onResizeStop={handleResizeStop}
       allowAnyClick
       dragHandleClassName="dragme"
       resizeHandleComponent={{
         right: null,
       }}
-      // size={{
-      //   width: itemPositionAndSize.width,
-      //   height: itemPositionAndSize.height,
-      // }}
-      // position={{
-      //   x: itemPositionAndSize.x,
-      //   y: itemPositionAndSize.y,
-      // }}
+      onDragStart={() => {
+        focusItem(product);
+      }}
     >
       <ProductImage
-        showBorders={isActive}
-        src={imageSrc}
+        showBorders={isFocused}
+        src={product.style_image || product.image}
         draggable={false}
         alt="https://image.shutterstock.com/image-vector/no-image-available-vector-illustration-260nw-744886198.jpg"
         className="dragme"
       ></ProductImage>
-      <ResizeButton className="resizeme" show={isActive} />
+      <ResizeButton className="resizeme" show={isFocused} />
       <DeleteButton
         onClick={handleDeleteButtonClick}
-        show={isActive}
+        show={isFocused}
         style={{ zIndex: zIndex + 1 }}
       />
     </Rnd>
@@ -104,7 +91,6 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
 
 const ProductImage = styled.img<{
   showBorders: boolean;
-  // itemPositionAndSize: IEditorItemPositionAndSize;
 }>`
   width: 100%;
   height: 100%;
@@ -119,7 +105,7 @@ const DeleteButton = styled.div<{ show: boolean }>`
   width: 15px;
   height: 15px;
   background-size: contain;
-  background-image: url(${resolveUrl("/image/close_btn.png")});
+  background-image: url("https://api.pppper.com/image/close_btn.png");
   opacity: ${(props) => (props.show ? 1 : 0)};
 `;
 const ResizeButton = styled.div<{ show: boolean }>`
@@ -129,7 +115,7 @@ const ResizeButton = styled.div<{ show: boolean }>`
   width: 15px;
   height: 15px;
 
-  background-image: url(${resolveUrl("/image/resize_btn.png")});
+  background-image: url("https://api.pppper.com/image/resize_btn.png");
   background-size: contain;
   opacity: ${(props) => (props.show ? 1 : 0)};
 `;

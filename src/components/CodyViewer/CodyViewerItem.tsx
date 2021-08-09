@@ -14,7 +14,7 @@ const CodyViewerItem: React.FC<ICodyViewerItemProps> = (props) => {
   return (
     <Wrapper itemPositionAndSize={itemPositionAndSize} zIndex={zIndex}>
       <CodyImage
-        src={product.style_image.url || product.image.url}
+        src={product.style_image || product.image}
         itemPositionAndSize={itemPositionAndSize}
       ></CodyImage>
     </Wrapper>

@@ -3,21 +3,12 @@ import { useCodyEditor } from "../../hooks/useCodyEditor";
 import { IProduct } from "../../types/IProduct";
 import CodyEditorProduct from "./CodyEditorProduct";
 
-
 const CodyProductPicker = () => {
   const {
     deselectProduct,
-    getProductZIndex,
-    handleItemFocus,
-    isAnythingFocused,
-    handleUnfocusAll,
-    isProductOnTop,
     isProductSelected,
     products,
-    selectedProducts,
     selectProduct,
-    updateItemPositionAndSize,
-    getItemPositionAndSize,
   } = useCodyEditor();
 
   return (

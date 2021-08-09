@@ -9,55 +9,24 @@ import {
 } from "../components/CodyEditor/CodyEditorItem";
 import { useContext } from "react";
 
-const initialProducts2: IProduct[] = [
-  {
-    id: 123123,
-    title: "옷가지1",
-    image: {
-      url: "https://picsum.photos/200/250",
-    },
-    style_image: {
-      url: "https://picsum.photos/200/250",
-    },
-  },
-  {
-    id: 123124,
-    title: "옷가지2",
-    image: {
-      url: "https://picsum.photos/200/250",
-    },
-    style_image: {
-      url: "https://picsum.photos/200/250",
-    },
-  },
-  {
-    id: 123125,
-    title: "옷가지2",
-    image: {
-      url: "https://picsum.photos/200/250",
-    },
-    style_image: {
-      url: "https://picsum.photos/200/250",
-    },
-  },
-];
-
 export interface ICodyEditorContext {
   deselectProduct;
+  exportCody;
+  serializeCody;
+  focusedItemId;
+  focusItem;
   getItemPositionAndSize;
   getMaxZIndex;
   getProductZIndex;
-  handleItemFocus;
-  handleUnfocusAll;
-  isAnythingFocused;
   isProductOnTop;
   isProductSelected;
   products;
   selectedProducts;
   selectProduct;
   setProducts;
+  unfocusAllItems;
+  unfocusItem;
   updateItemPositionAndSize;
-  exportCody;
 }
 
 export const CodyEditorContext = createContext({} as ICodyEditorContext);
@@ -79,6 +48,8 @@ export const CodyEditorContextProvider = ({ children }) => {
 
     return { initialProductsMap, initialProductsZIndexMap };
   })();
+
+  const [focusedItemId, setFocusedItemId] = useState<TProductZIndex | null>(-1);
 
   const [productsMap, setProductsMap] =
     useState<Map<TProductId, IProduct>>(initialProductsMap);
@@ -120,8 +91,6 @@ export const CodyEditorContextProvider = ({ children }) => {
     new Set()
   );
 
-  const [isAnythingFocused, setIsAnythingFocused] = useState<boolean>(false);
-
   const selectProduct = (product: IProduct) => {
     const nextSelectedProductIdSet = new Set(selectedProductIdSet);
     nextSelectedProductIdSet.add(product.id);
@@ -144,14 +113,14 @@ export const CodyEditorContextProvider = ({ children }) => {
     selectedProductIdSet.has(product.id);
 
   const getMaxZIndex = () => {
-    return Math.max(...Array.from(productsZIndexMap.values()));
+    return Math.max(...Array.from(productsZIndexMap.values()), 0);
   };
 
   const isProductOnTop = (product: IProduct) =>
     getMaxZIndex() === getProductZIndex(product);
 
   // event handlers
-  const handleItemFocus = (product: IProduct) => {
+  const focusItem = (product: IProduct) => {
     const zIndex = getProductZIndex(product);
     const maxZIndex = getMaxZIndex();
     // upgrade zIndex
@@ -162,13 +131,15 @@ export const CodyEditorContextProvider = ({ children }) => {
       nextZIndex = zIndex;
     }
     setProductZIndex(product, nextZIndex);
-    setIsAnythingFocused(true);
+    setFocusedItemId(product.id);
+
+    console.table({ zIndex, maxZIndex, nextZIndex });
   };
 
-  const handleUnfocusAll = () => {
-    setIsAnythingFocused(false);
+  const unfocusItem = (product: IProduct) => {};
+  const unfocusAllItems = () => {
+    setFocusedItemId(-1);
   };
-
   const selectedProducts = products.filter((product) =>
     isProductSelected(product)
   );
@@ -181,22 +152,32 @@ export const CodyEditorContextProvider = ({ children }) => {
     };
   };
 
+  const serializeCody = () => {
+    return {
+      products: selectedProducts,
+      productsZIndex: Object.fromEntries(productsZIndexMap),
+      itemPositionAndSize: Object.fromEntries(itemPositionAndSizeMap),
+    };
+  };
+
   const context: ICodyEditorContext = {
     deselectProduct,
+    exportCody,
+    serializeCody,
+    focusedItemId,
+    focusItem,
     getItemPositionAndSize,
     getMaxZIndex,
     getProductZIndex,
-    handleItemFocus,
-    handleUnfocusAll,
-    isAnythingFocused,
     isProductOnTop,
     isProductSelected,
     products,
     selectedProducts,
     selectProduct,
     setProducts,
+    unfocusAllItems,
+    unfocusItem,
     updateItemPositionAndSize,
-    exportCody,
   };
 
   return (

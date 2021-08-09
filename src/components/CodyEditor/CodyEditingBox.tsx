@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CODY_HEIGHT, CODY_WIDTH } from "../../constants";
 import { useCodyEditor } from "../../hooks/useCodyEditor";
 import { IProduct } from "../../types/IProduct";
-import CodyEditorItem, { initialEditorItemSize } from "./CodyEditorItem";
+import CodyEditorItem from "./CodyEditorItem";
 
 interface ICodyViewerProps {
   isEditing?: boolean;
@@ -13,29 +13,26 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
     deselectProduct,
     getItemPositionAndSize,
     getProductZIndex,
-    handleItemFocus,
-    handleUnfocusAll,
-    isAnythingFocused,
-    isProductOnTop,
     selectedProducts,
     updateItemPositionAndSize,
+    unfocusAllItems,
+    focusedItemId,
   } = useCodyEditor();
 
   const handleCodyViewerClick = () => {
-    handleUnfocusAll();
+    unfocusAllItems();
   };
+
   return (
     <Wrapper onClick={handleCodyViewerClick}>
       {selectedProducts.map((product: IProduct) => (
         <CodyEditorItem
           key={product.id}
-          productId={product.id}
-          imageSrc={product.style_image.url || product.image.url}
+          product={product}
           zIndex={getProductZIndex(product)}
-          isActive={isAnythingFocused && isProductOnTop(product)}
+          isFocused={focusedItemId === product.id}
           onDelete={() => deselectProduct(product)}
-          onFocus={() => handleItemFocus(product)}
-          onDrag={(_, data) => {
+          onDragStop={(_, data) => {
             const itemPositionAndSize = getItemPositionAndSize(product);
             updateItemPositionAndSize(product, {
               ...itemPositionAndSize,
@@ -43,7 +40,7 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
               y: data.y,
             });
           }}
-          onResize={(e, dir, refToElement, delta, position) => {
+          onResizeStop={(e, dir, refToElement, delta, position) => {
             updateItemPositionAndSize(product, {
               x: position.x,
               y: position.y,
