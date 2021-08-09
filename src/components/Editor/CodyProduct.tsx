@@ -9,7 +9,7 @@ interface ProductItemProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-const ProductItem: React.FC<ProductItemProps> = (props) => {
+const CodyProduct: React.FC<ProductItemProps> = (props) => {
   const { product, onClick, selected } = props;
   return (
     <Wrapper onClick={onClick}>
@@ -36,4 +36,4 @@ const ProductImage = styled.img<{ selected: boolean }>`
   width: 100%;
 `;
 
-export default ProductItem;
+export default CodyProduct;

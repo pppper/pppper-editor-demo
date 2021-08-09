@@ -1,12 +1,13 @@
 import { createContext, useState } from "react";
 import { TProductZIndex } from "../App";
 import { IProduct, TProductId } from "../types/IProduct";
-import _ from "lodash";
+import _, { create } from "lodash";
 import {
   IEditorItemPositionAndSize,
   initialEditorItemPosition,
   initialEditorItemSize,
 } from "../components/Editor/CodyItem";
+import { useContext } from "react";
 
 const initialProducts: IProduct[] = [
   {
@@ -41,7 +42,26 @@ const initialProducts: IProduct[] = [
   },
 ];
 
-export const useCodyEditor = () => {
+export interface ICodyEditorContext {
+  deselectProduct;
+  getItemPositionAndSize;
+  getMaxZIndex;
+  getProductZIndex;
+  handleItemFocus;
+  handleUnfocusAll;
+  isEditing;
+  isProductOnTop;
+  isProductSelected;
+  products;
+  selectedProducts;
+  selectProduct;
+  setProducts;
+  updateItemPositionAndSize;
+}
+
+export const CodyEditorContext = createContext({} as ICodyEditorContext);
+
+export const CodyEditorContextProvider = ({ children }) => {
   const [products, setProducts] = useState<IProduct[]>(initialProducts);
 
   let { initialProductsMap, initialProductsZIndexMap } = (() => {
@@ -148,7 +168,7 @@ export const useCodyEditor = () => {
     isProductSelected(product)
   );
 
-  return {
+  const context = {
     deselectProduct,
     getItemPositionAndSize,
     getMaxZIndex,
@@ -164,4 +184,13 @@ export const useCodyEditor = () => {
     setProducts,
     updateItemPositionAndSize,
   };
+  return (
+    <CodyEditorContext.Provider value={context}>
+      {children}
+    </CodyEditorContext.Provider>
+  );
+};
+
+export const useCodyEditor = () => {
+  return useContext(CodyEditorContext);
 };
