@@ -36,7 +36,6 @@ const Wrapper = styled.div<{ backgroundColor: string }>`
 
   position: relative;
   background-color: ${(props) => props.backgroundColor};
-  border: 1px solid black;
 `;
 
 export default CodyViewer;

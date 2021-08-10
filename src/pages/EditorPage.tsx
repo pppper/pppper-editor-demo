@@ -2,9 +2,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { CodyCanvas } from '../components/CodyCanvas/CodyCanvas';
 import CodyEditingBox from '../components/CodyEditor/CodyEditingBox';
 import CodyProductPicker from '../components/CodyEditor/CodyProductPicker';
-import { CodyExporter } from '../components/CodyExporter/CodyExporter';
 import CodyViewer from '../components/CodyViewer/CodyViewer';
 import { ICody, useCodyEditor } from '../hooks/useCodyEditor';
 import { IProduct } from '../types/IProduct';
@@ -51,15 +51,35 @@ const CodyGenerationPage: React.FC = () => {
         }}
       ></input>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <CodyEditingBox />
-        {!cody || <CodyViewer cody={cody}></CodyViewer>}
+        <Column>
+          <h3>EDITOR</h3>
+          <CodyEditingBox />
+        </Column>
+        <Column>
+          <h3>RENDER</h3>
+          <CodyViewer cody={cody} />
+        </Column>
+        <Column>
+          <h3>CANVAS</h3>
+          <CodyCanvas cody={cody} />
+        </Column>
       </div>
       <CodyProductPicker />
-      <CodyExporter />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+`;
 
 export default CodyGenerationPage;

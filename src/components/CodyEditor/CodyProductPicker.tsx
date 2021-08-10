@@ -35,8 +35,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  width: 400px;
+  width: 800px;
+  height: 300px;
   overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 export default CodyProductPicker;

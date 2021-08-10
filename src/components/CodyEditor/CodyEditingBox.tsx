@@ -59,8 +59,6 @@ const CodyEditingBox: React.FC<ICodyViewerProps> = (props) => {
 const Wrapper = styled.div<{ backgroundColor: string }>`
   width: ${CODY_WIDTH}px;
   height: ${CODY_HEIGHT}px;
-  border-radius: 8px;
-  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.17);
   background-color: ${(props) => props.backgroundColor};
 `;
 

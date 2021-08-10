@@ -21,7 +21,6 @@ const CodyEditorProduct: React.FC<ProductItemProps> = (props) => {
 
 const Wrapper = styled.div`
   flex-shrink: 0;
-  width: 38%;
   padding: 8px;
 `;
 
@@ -31,7 +30,8 @@ const ProductImage = styled.img<{ selected: boolean }>`
     props.selected ? "border-color: purple" : "border-color: transparent"};
   transition: border-color 0.3s ease-in;
   object-fit: cover;
-  width: 100%;
+  width: 200px;;
+  height: 200px;
 `;
 
 export default CodyEditorProduct;
