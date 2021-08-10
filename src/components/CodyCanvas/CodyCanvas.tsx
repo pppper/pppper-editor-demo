@@ -70,6 +70,14 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     canvas.toBlob(function (blob: Blob) {
       const blobUrl = URL.createObjectURL(blob);
       setDownloadUrl(blobUrl);
+      setTimeout(() => {
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.setAttribute("download", "image.jpg");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, 300);
     }, "image/png");
   };
 
@@ -105,9 +113,6 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
       ></Canvas>
       <button onClick={exportImage}>download</button>
       <button onClick={shareImage}>share</button>
-      <a href={downloadUrl} download>
-        Download
-      </a>
     </Wrapper>
   );
 };
