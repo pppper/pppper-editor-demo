@@ -18,7 +18,7 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
   const canvasRef = useRef(null);
   const [downloadUrl, setDownloadUrl] = useState<string>("");
 
-  const draw = (ctx: CanvasRenderingContext2D) => {
+  const draw = async (ctx: CanvasRenderingContext2D) => {
     // ctx.globalCompositeOperation = "destination-over";
     ctx.fillStyle = cody.backgroundColor;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -30,6 +30,7 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     });
 
     // draw images
+    const promises = [];
     for (let product of cody.products) {
       const itemPositionAndSize: IEditorItemPositionAndSize =
         cody.itemPositionAndSizeMap.get(product.id);
@@ -38,14 +39,23 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
       const image = new Image();
       image.src = imgSrc;
       image.crossOrigin = "anonymous";
-      ctx.drawImage(
-        image,
-        x * CanvasScaleFactor,
-        y * CanvasScaleFactor,
-        width * CanvasScaleFactor,
-        height * CanvasScaleFactor
-      );
+      const promise = new Promise((resolve, reject) => {
+        image.onload = function () {
+          ctx.drawImage(
+            image,
+            x * CanvasScaleFactor,
+            y * CanvasScaleFactor,
+            width * CanvasScaleFactor,
+            height * CanvasScaleFactor
+          );
+        };
+        resolve(1);
+      });
+
+      promises.push(promise);
     }
+
+    await Promise.all(promises);
   };
 
   const drawNow = () => {
@@ -67,8 +77,19 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     drawNow();
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.toBlob(function (blob: Blob) {
-      const file = new File([blob], "file.png");
-      navigator.share({ title: "title", text: "text", files: [file] } as ShareData);
+      const file = new File([blob], "file.png", { type: "image/png" });
+      const canShare =
+        (navigator as any).canShare &&
+        (navigator as any).canShare({ files: [file] });
+      alert(canShare);
+      if (canShare) {
+        navigator.share({
+          text: "text",
+          title: "title",
+          url: "url",
+          files: [file],
+        } as ShareData);
+      }
     }, "image/png");
   };
 
