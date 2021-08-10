@@ -1,14 +1,15 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { IEditorItemPositionAndSize } from "../components/CodyEditor/CodyEditorItem";
-import CodyProductPicker from "../components/CodyEditor/CodyProductPicker";
-import CodyEditingBox from "../components/CodyEditor/CodyEditingBox";
-import { ICody, useCodyEditor } from "../hooks/useCodyEditor";
-import { IProduct } from "../types/IProduct";
-import CodyViewer from "../components/CodyViewer/CodyViewer";
-import { useEffect } from "react";
 import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+import styled from "styled-components";
+
+import { IProduct } from "../types/IProduct";
 import { resolveUrl } from "../utils/resolveUrl";
+import CodyViewer from "../components/CodyViewer/CodyViewer";
+import { ICody, useCodyEditor } from "../hooks/useCodyEditor";
+import CodyEditingBox from "../components/CodyEditor/CodyEditingBox";
+import { CodyExporter } from "../components/CodyExporter/CodyExporter";
+import CodyProductPicker from "../components/CodyEditor/CodyProductPicker";
 
 const CodyGenerationPage: React.FC = () => {
   useEffect(() => {
@@ -28,17 +29,9 @@ const CodyGenerationPage: React.FC = () => {
       });
   }, []);
 
-  const {
-    exportCody,
-    getItemPositionAndSize,
-    selectedProducts,
-    setProducts,
-    serializeCody,
-    setBackgroundColor,
-  } = useCodyEditor();
+  const { exportCody, setProducts, setBackgroundColor } = useCodyEditor();
 
   const cody: ICody = exportCody();
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const sampleColors = ["#FFAEBC", "#A0E7E5", "#B4F8C8", "#FBE7C6"];
   const [color, setColor] = useState<string>(
     sampleColors[Math.floor(Math.random() * sampleColors.length)]
@@ -63,21 +56,7 @@ const CodyGenerationPage: React.FC = () => {
         {!cody || <CodyViewer cody={cody}></CodyViewer>}
       </div>
       <CodyProductPicker />
-      {selectedProducts.map((product) => {
-        const itemPositionAndSize: IEditorItemPositionAndSize =
-          getItemPositionAndSize(product);
-        return (
-          <div key={product.id}>
-            <span>
-              {product.title}
-              <br />
-              Position: {itemPositionAndSize.x}, {itemPositionAndSize.y}
-              <br />
-              Size: {itemPositionAndSize.width}, {itemPositionAndSize.height}
-            </span>
-          </div>
-        );
-      })}
+      <CodyExporter />
     </Wrapper>
   );
 };
