@@ -1,13 +1,11 @@
-import { createContext, useState } from "react";
-import { TProductZIndex } from "../App";
-import { IProduct, TProductId } from "../types/IProduct";
-import _ from "lodash";
+import _ from 'lodash';
+import { createContext, useContext, useState } from 'react';
+
+import { TProductZIndex } from '../App';
 import {
-  IEditorItemPositionAndSize,
-  initialEditorItemPosition,
-  initialEditorItemSize,
-} from "../components/CodyEditor/CodyEditorItem";
-import { useContext } from "react";
+    IEditorItemPositionAndSize, initialEditorItemPosition, initialEditorItemSize
+} from '../components/CodyEditor/CodyEditorItem';
+import { IProduct, TProductId } from '../types/IProduct';
 
 export interface ICodyEditorContext {
   deselectProduct;

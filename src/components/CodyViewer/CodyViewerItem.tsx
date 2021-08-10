@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { TProductZIndex } from "../../App";
-import { IProduct } from "../../types/IProduct";
-import { IEditorItemPositionAndSize } from "../CodyEditor/CodyEditorItem";
+import styled from 'styled-components';
+
+import { TProductZIndex } from '../../App';
+import { IProduct } from '../../types/IProduct';
+import { IEditorItemPositionAndSize } from '../CodyEditor/CodyEditorItem';
 
 interface ICodyViewerItemProps {
   product?: IProduct;

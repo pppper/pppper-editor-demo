@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { useCodyEditor } from "../../hooks/useCodyEditor";
-import { IProduct } from "../../types/IProduct";
-import CodyEditorProduct from "./CodyEditorProduct";
+import styled from 'styled-components';
+
+import { useCodyEditor } from '../../hooks/useCodyEditor';
+import { IProduct } from '../../types/IProduct';
+import CodyEditorProduct from './CodyEditorProduct';
 
 const CodyProductPicker = () => {
   const { deselectProduct, isProductSelected, products, selectProduct } =

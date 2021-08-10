@@ -1,6 +1,7 @@
-import { MouseEventHandler } from "react";
-import styled from "styled-components";
-import { IProduct } from "../../types/IProduct";
+import { MouseEventHandler } from 'react';
+import styled from 'styled-components';
+
+import { IProduct } from '../../types/IProduct';
 
 interface ProductItemProps {
   product: IProduct;

@@ -1,15 +1,14 @@
-import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import styled from "styled-components";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import { IProduct } from "../types/IProduct";
-import { resolveUrl } from "../utils/resolveUrl";
-import CodyViewer from "../components/CodyViewer/CodyViewer";
-import { ICody, useCodyEditor } from "../hooks/useCodyEditor";
-import CodyEditingBox from "../components/CodyEditor/CodyEditingBox";
-import { CodyExporter } from "../components/CodyExporter/CodyExporter";
-import CodyProductPicker from "../components/CodyEditor/CodyProductPicker";
+import CodyEditingBox from '../components/CodyEditor/CodyEditingBox';
+import CodyProductPicker from '../components/CodyEditor/CodyProductPicker';
+import { CodyExporter } from '../components/CodyExporter/CodyExporter';
+import CodyViewer from '../components/CodyViewer/CodyViewer';
+import { ICody, useCodyEditor } from '../hooks/useCodyEditor';
+import { IProduct } from '../types/IProduct';
+import { resolveUrl } from '../utils/resolveUrl';
 
 const CodyGenerationPage: React.FC = () => {
   useEffect(() => {

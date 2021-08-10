@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { CODY_HEIGHT, CODY_WIDTH } from "../../constants";
-import { useCodyEditor } from "../../hooks/useCodyEditor";
-import { IProduct } from "../../types/IProduct";
-import CodyEditorItem from "./CodyEditorItem";
+import styled from 'styled-components';
+
+import { CODY_HEIGHT, CODY_WIDTH } from '../../constants';
+import { useCodyEditor } from '../../hooks/useCodyEditor';
+import { IProduct } from '../../types/IProduct';
+import CodyEditorItem from './CodyEditorItem';
 
 interface ICodyViewerProps {
   isEditing?: boolean;

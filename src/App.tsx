@@ -1,7 +1,9 @@
-import "./App.css";
-import styled from "styled-components";
-import { CodyEditorContextProvider } from "./hooks/useCodyEditor";
-import CodyGenerationPage from "./pages/EditorPage";
+import './App.css';
+
+import styled from 'styled-components';
+
+import { CodyEditorContextProvider } from './hooks/useCodyEditor';
+import CodyGenerationPage from './pages/EditorPage';
 
 export type TProductZIndex = number;
 

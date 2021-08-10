@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { Rnd } from "react-rnd";
-import { TProductZIndex } from "../../App";
-import { useCodyEditor } from "../../hooks/useCodyEditor";
-import { IProduct } from "../../types/IProduct";
+import { Rnd } from 'react-rnd';
+import styled from 'styled-components';
+
+import { TProductZIndex } from '../../App';
+import { useCodyEditor } from '../../hooks/useCodyEditor';
+import { IProduct } from '../../types/IProduct';
 
 export interface ProductItemProps {
   isFocused: boolean;

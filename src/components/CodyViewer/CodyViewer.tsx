@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { CODY_HEIGHT, CODY_WIDTH } from "../../constants";
-import { ICody } from "../../hooks/useCodyEditor";
-import { IProduct } from "../../types/IProduct";
-import CodyViewerItem from "./CodyViewerItem";
+import styled from 'styled-components';
+
+import { CODY_HEIGHT, CODY_WIDTH } from '../../constants';
+import { ICody } from '../../hooks/useCodyEditor';
+import { IProduct } from '../../types/IProduct';
+import CodyViewerItem from './CodyViewerItem';
 
 export interface ICodyViewerProps {
   cody: ICody;
