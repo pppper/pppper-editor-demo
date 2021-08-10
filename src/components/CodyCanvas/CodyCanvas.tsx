@@ -63,6 +63,15 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     }, "image/png");
   };
 
+  const shareImage = () => {
+    drawNow();
+    const canvas: HTMLCanvasElement = canvasRef.current;
+    canvas.toBlob(function (blob: Blob) {
+      const file = new File([blob], "file.png");
+      navigator.share({ text: "shit", files: [file] } as ShareData);
+    }, "image/png");
+  };
+
   useEffect(() => {
     drawNow();
   }, [cody]);
@@ -74,6 +83,7 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
         height={CODY_HEIGHT * CanvasScaleFactor}
       ></Canvas>
       <button onClick={exportImage}>download</button>
+      <button onClick={shareImage}>share</button>
       <a href={downloadUrl}>Download</a>
     </Wrapper>
   );
