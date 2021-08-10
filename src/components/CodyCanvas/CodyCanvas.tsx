@@ -10,7 +10,7 @@ export interface ICodyExporterProps {
   cody: ICody;
 }
 
-const CanvasScaleFactor = 1;
+const CanvasScaleFactor = 4;
 
 export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
   const { selectedProducts } = useCodyEditor();
@@ -48,8 +48,8 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
             width * CanvasScaleFactor,
             height * CanvasScaleFactor
           );
+          resolve(1);
         };
-        resolve(1);
       });
 
       promises.push(promise);
@@ -58,14 +58,14 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     await Promise.all(promises);
   };
 
-  const drawNow = () => {
+  const drawNow = async () => {
     const canvas: HTMLCanvasElement = canvasRef.current;
     const context: CanvasRenderingContext2D = canvas.getContext("2d");
-    draw(context);
+    await draw(context);
   };
 
-  const exportImage = () => {
-    drawNow();
+  const exportImage = async () => {
+    await drawNow();
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.toBlob(function (blob: Blob) {
       const blobUrl = URL.createObjectURL(blob);
@@ -105,7 +105,9 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
       ></Canvas>
       <button onClick={exportImage}>download</button>
       <button onClick={shareImage}>share</button>
-      <a href={downloadUrl}>Download</a>
+      <a href={downloadUrl} download>
+        Download
+      </a>
     </Wrapper>
   );
 };
@@ -120,4 +122,5 @@ const Wrapper = styled.div`
 const Canvas = styled.canvas`
   width: ${CODY_WIDTH};
   height: ${CODY_HEIGHT};
+  display: none;
 `;
