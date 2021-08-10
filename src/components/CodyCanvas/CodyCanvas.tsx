@@ -10,7 +10,7 @@ export interface ICodyExporterProps {
   cody: ICody;
 }
 
-const CanvasScaleFactor = 3;
+const CanvasScaleFactor = 1;
 
 export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
   const { selectedProducts } = useCodyEditor();
@@ -68,7 +68,7 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.toBlob(function (blob: Blob) {
       const file = new File([blob], "file.png");
-      navigator.share({ text: "shit", files: [file] } as ShareData);
+      navigator.share({ title: "title", text: "text", files: [file] } as ShareData);
     }, "image/png");
   };
 
