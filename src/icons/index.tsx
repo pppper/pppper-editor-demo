@@ -1,2 +1,2 @@
-import { resolveUrl } from "../utils/resolveUrl"
+import { resolveUrl } from '../utils/resolveUrl';
 
