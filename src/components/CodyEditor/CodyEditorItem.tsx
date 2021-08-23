@@ -61,6 +61,10 @@ const CodyEditorItem: React.FC<ProductItemProps> = (props) => {
       bounds="parent"
       style={{
         zIndex: zIndex || 0,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
       }}
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
@@ -94,7 +98,8 @@ const ProductImage = styled.img<{
   showBorders: boolean;
 }>`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  /* height: ${initialEditorItemSize.height}; */
   /* border: -1px solid;
   border-color: ${(props) => (props.showBorders ? "#ddd" : "transparent")}; */
 `;

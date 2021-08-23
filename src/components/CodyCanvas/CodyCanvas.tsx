@@ -13,10 +13,8 @@ export interface ICodyExporterProps {
 const CanvasScaleFactor = 4;
 
 export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
-  const { selectedProducts } = useCodyEditor();
   const { cody } = props;
   const canvasRef = useRef(null);
-  const [downloadUrl, setDownloadUrl] = useState<string>("");
 
   const draw = async (ctx: CanvasRenderingContext2D) => {
     // ctx.globalCompositeOperation = "destination-over";
@@ -69,7 +67,6 @@ export const CodyCanvas: React.FC<ICodyExporterProps> = (props) => {
     const canvas: HTMLCanvasElement = canvasRef.current;
     canvas.toBlob(function (blob: Blob) {
       const blobUrl = URL.createObjectURL(blob);
-      setDownloadUrl(blobUrl);
       setTimeout(() => {
         const link = document.createElement("a");
         link.href = blobUrl;
